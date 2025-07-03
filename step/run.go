@@ -27,14 +27,14 @@ func (s *Step) Run(config Config) (Result, error) {
 		return Result{}, fmt.Errorf("failed to authenticate with service account: %w", err)
 	}
 
-	s.logger.Infof("GCP authentication successful\n")
+	s.logger.Printf("GCP authentication successful")
 
 	token, err := s.generateToken()
 	if err != nil {
 		return Result{}, fmt.Errorf("failed to generate access token: %w", err)
 	}
 
-	s.logger.Infof("Access token generated\n")
+	s.logger.Printf("Access token generated")
 
 	if config.DockerLogin {
 		err = s.loginWithDocker(token, config.ArtifactRegistryLocations)

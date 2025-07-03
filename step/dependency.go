@@ -20,7 +20,7 @@ const (
 
 func (s *Step) InstallDependencies() error {
 	s.logger.Println()
-	s.logger.Infof("Getting CLI version:\n")
+	s.logger.Infof("Getting CLI version:")
 
 	version, ok, err := s.installedCLIVersion()
 	if err != nil {
@@ -28,16 +28,16 @@ func (s *Step) InstallDependencies() error {
 	}
 
 	if ok && version == supportedCLIVersion {
-		s.logger.Printf("CLI version %s is already installed.\n", version)
+		s.logger.Printf("CLI version %s is already installed.", version)
 		return nil
 	}
 
 	if !ok {
-		s.logger.Printf("Installing CLI version: %s\n", version)
+		s.logger.Printf("Installing CLI version: %s", version)
 		return s.installCLI()
 	}
 
-	s.logger.Printf("Updating CLI version to: %s\n", supportedCLIVersion)
+	s.logger.Printf("Updating CLI version to: %s", supportedCLIVersion)
 	return s.updateCLI()
 }
 
