@@ -1,0 +1,63 @@
+title: TBD
+summary: TBD
+description: TBD
+website: TBD
+source_code_url: TBD
+support_url: TBD
+
+type_tags:
+- test
+
+project_type_tags:
+- ios
+- macos
+- react-native
+- cordova
+- ionic
+- flutter
+
+toolkit:
+  go:
+    package_name: github.com/tothszabi/gcp-auth
+
+inputs:
+  - service_account_key:
+    opts:
+      title: Service account key
+      summary: Service account key
+      is_required: true
+      is_sensitive: true
+  - docker_login: "false"
+    opts:
+      category: Docker
+      title: Docker login
+      summary: Docker login
+      is_required: true
+      value_options:
+      - "true"
+      - "false"
+  - artifact_registry_locations:
+    opts:
+      category: Docker
+      title: Artifact Registry locations
+      summary: Artifact Registry locations
+      is_required: true
+  - verbose: "false"
+    opts:
+      category: Debugging
+      title: Enable verbose logging
+      summary: Enable logging additional information for debugging.
+      is_required: true
+      value_options:
+      - "true"
+      - "false"
+
+outputs:
+  - GOOGLE_AUTH_TOKEN:
+    opts:
+      title: Google auth token
+      summary: Google auth token
+  - GOOGLE_APPLICATION_CREDENTIALS:
+    opts:
+      title: Google credentials path
+      summary: Google credentials path
