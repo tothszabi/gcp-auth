@@ -94,7 +94,8 @@ func (s *Step) loginWithDocker(token string, locations []string) error {
 		cmd := s.commandFactory.Create("docker", []string{"login", "-u", "oauth2accesstoken", "--password-stdin", fmt.Sprintf("https://%s", location)}, &command.Opts{
 			Stdin: strings.NewReader(token),
 		})
-		if err := cmd.Run(); err != nil {
+		if output, err := cmd.RunAndReturnTrimmedCombinedOutput(); err != nil {
+			s.logger.Errorf("docker failure: %s", output)
 			return err
 		}
 	}
