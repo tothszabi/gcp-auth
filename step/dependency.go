@@ -122,11 +122,12 @@ func getArchitecture() (string, error) {
 }
 
 func downloadSDK(url string) (string, error) {
-	tarPath, err := os.MkdirTemp("", "")
+	tmpDir, err := os.MkdirTemp("", "")
 	if err != nil {
 		return "", err
 	}
 
+	tarPath := path.Join(tmpDir, "google-cloud-sdk.tar.gz")
 	out, err := os.Create(tarPath)
 	if err != nil {
 		return "", err
