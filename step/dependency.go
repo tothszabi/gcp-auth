@@ -28,16 +28,16 @@ func (s *Step) InstallDependencies() error {
 	}
 
 	if ok && version == supportedCLIVersion {
-		s.logger.Infof("CLI version %s is already installed.\n", version)
+		s.logger.Printf("CLI version %s is already installed.\n", version)
 		return nil
 	}
 
 	if !ok {
-		s.logger.Infof("Installing CLI version: %s\n", version)
+		s.logger.Printf("Installing CLI version: %s\n", version)
 		return s.installCLI()
 	}
 
-	s.logger.Infof("Updating CLI version to: %s\n", supportedCLIVersion)
+	s.logger.Printf("Updating CLI version to: %s\n", supportedCLIVersion)
 	return s.updateCLI()
 }
 
@@ -63,9 +63,6 @@ func (s *Step) installedCLIVersion() (string, bool, error) {
 }
 
 func (s *Step) installCLI() error {
-	s.logger.Println()
-	s.logger.Infof("Installing gcloud CLI version %s\n", supportedCLIVersion)
-
 	platform, err := getPlatform()
 	if err != nil {
 		return fmt.Errorf("failed to get platform: %w", err)
