@@ -19,26 +19,29 @@ const (
 )
 
 func (s *Step) InstallDependencies() error {
+	s.logger.Println()
+	s.logger.Infof("Getting CLI version:\n")
+
 	version, ok, err := s.installedCLIVersion()
 	if err != nil {
 		return s.installCLI()
 	}
 
 	if ok && version == supportedCLIVersion {
+		s.logger.Infof("CLI version %s is already installed.\n", version)
 		return nil
 	}
 
 	if !ok {
+		s.logger.Infof("Installing CLI version: %s\n", version)
 		return s.installCLI()
 	}
 
+	s.logger.Infof("Updateing CLI version to: %s\n", supportedCLIVersion)
 	return s.updateCLI()
 }
 
 func (s *Step) installedCLIVersion() (string, bool, error) {
-	s.logger.Println()
-	s.logger.Infof("Getting CLI version:")
-
 	cmd := s.commandFactory.Create("gcloud", []string{"version", "--format", "json", "--quiet"}, nil)
 	output, err := cmd.RunAndReturnTrimmedOutput()
 	if err != nil {

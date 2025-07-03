@@ -27,14 +27,22 @@ func (s *Step) Run(config Config) (Result, error) {
 		return Result{}, fmt.Errorf("failed to authenticate with service account: %w", err)
 	}
 
+	s.logger.Infof("GCP authentication successful\n")
+
 	token, err := s.generateToken()
 	if err != nil {
 		return Result{}, fmt.Errorf("failed to generate access token: %w", err)
 	}
 
-	err = s.loginWithDocker(token, config.ArtifactRegistryLocations)
-	if err != nil {
-		return Result{}, fmt.Errorf("failed to login to Docker with GCP token: %w", err)
+	s.logger.Infof("Access token generated\n")
+
+	if config.DockerLogin {
+		err = s.loginWithDocker(token, config.ArtifactRegistryLocations)
+		if err != nil {
+			return Result{}, fmt.Errorf("failed to login to Docker with GCP token: %w", err)
+		}
+
+		s.logger.Infof("Logged in with Docker\n")
 	}
 
 	return Result{
@@ -72,7 +80,8 @@ func save(serviceAccountKey string) (string, error) {
 
 func (s *Step) authenticate(email, keyPath string) error {
 	cmd := s.commandFactory.Create("gcloud", []string{"auth", "activate-service-account", email, fmt.Sprintf("--key-file=%s", keyPath)}, nil)
-	if err := cmd.Run(); err != nil {
+	if output, err := cmd.RunAndReturnTrimmedCombinedOutput(); err != nil {
+		s.logger.Errorf("GCP authentication output: %s", output)
 		return err
 	}
 
@@ -95,7 +104,7 @@ func (s *Step) loginWithDocker(token string, locations []string) error {
 			Stdin: strings.NewReader(token),
 		})
 		if output, err := cmd.RunAndReturnTrimmedCombinedOutput(); err != nil {
-			s.logger.Errorf("docker failure: %s", output)
+			s.logger.Errorf("Docker login output: %s", output)
 			return err
 		}
 	}
