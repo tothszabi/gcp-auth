@@ -42,7 +42,7 @@ func (s *Step) Run(config Config) (Result, error) {
 			return Result{}, fmt.Errorf("failed to login to Docker with GCP token: %w", err)
 		}
 
-		s.logger.Infof("Logged in with Docker\n")
+		s.logger.Printf("Logged in with Docker")
 	}
 
 	return Result{

@@ -1,4 +1,4 @@
-module github.com/tothszabi/gcp-auth
+module github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp
 
 go 1.22
 

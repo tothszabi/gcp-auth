@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/tothszabi/gcp-auth/step"
+	"github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp/step"
 
 	"github.com/bitrise-io/go-steputils/v2/export"
 	"github.com/bitrise-io/go-steputils/v2/stepconf"

@@ -1,12 +1,17 @@
-title: TBD
-summary: TBD
-description: TBD
-website: TBD
-source_code_url: TBD
-support_url: TBD
+title: Authenticate with Google Cloud Platform (GCP)
+summary: The step authenticates with GCP using a service account key.
+description: |-
+  This step authenticates with Google Cloud Platform (GCP) using a service account key.
+
+  It generates a Google auth token and sets the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
+  
+  The step can also log in to Docker to the supplied Artifact Registry locations.
+website: https://github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp
+source_code_url: https://github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp
+support_url: https://github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp/issues
 
 type_tags:
-- test
+- utility
 
 project_type_tags:
 - ios
@@ -18,20 +23,32 @@ project_type_tags:
 
 toolkit:
   go:
-    package_name: github.com/tothszabi/gcp-auth
+    package_name: github.com/bitrise-steplib/bitrise-step-authenticate-wth-gcp
 
 inputs:
   - service_account_key:
     opts:
       title: Service account key
-      summary: Service account key
+      summary: |-
+        The service account key in JSON format.
+      description: |-
+          The service account key in JSON format.
+
+          You can generate a service account key in the Google Cloud Console. Make sure to grant the necessary permissions to the service account.
+
+          The step will use this key to authenticate with GCP and generate a Google auth token.
       is_required: true
       is_sensitive: true
   - docker_login: "false"
     opts:
       category: Docker
       title: Docker login
-      summary: Docker login
+      summary: |-
+        Performs Docker login with an auth token.
+      description: |-
+        Performs Docker login with an auth token. 
+
+        The step will log in to the Artifact Registry locations specified in the `artifact_registry_locations` input.
       is_required: true
       value_options:
       - "true"
@@ -40,7 +57,14 @@ inputs:
     opts:
       category: Docker
       title: Artifact Registry locations
-      summary: Artifact Registry locations
+      summary: |-
+        A newline (`\n`) separated list of Artifact Registry locations to log in to.
+      description: |-
+        A newline (`\n`) separated list of Artifact Registry locations to log in to.
+
+        The step will log in to the specified locations using the Google auth token generated from the service account key.
+        
+        These locations can point ot either the deprecated Container Registry or the new Artifact Registry.
       is_required: true
   - verbose: "false"
     opts:
@@ -56,8 +80,14 @@ outputs:
   - GOOGLE_AUTH_TOKEN:
     opts:
       title: Google auth token
-      summary: Google auth token
+      summary: |-
+        The generated Google auth token.
+
+        This token can be used to authenticate with GCP services.
   - GOOGLE_APPLICATION_CREDENTIALS:
     opts:
       title: Google credentials path
-      summary: Google credentials path
+      summary: |-
+        The path to the service account key file.
+
+        This file is used by GCP SDKs and libraries to authenticate with GCP services.
