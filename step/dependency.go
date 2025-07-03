@@ -39,8 +39,8 @@ func (s *Step) installedCLIVersion() (string, bool, error) {
 	s.logger.Println()
 	s.logger.Infof("Getting CLI version:")
 
-	cmd := s.commandFactory.Create("gcloud", []string{"version", "--format", "json", "----quiet"}, nil)
-	output, err := cmd.RunAndReturnTrimmedCombinedOutput()
+	cmd := s.commandFactory.Create("gcloud", []string{"version", "--format", "json", "--quiet"}, nil)
+	output, err := cmd.RunAndReturnTrimmedOutput()
 	if err != nil {
 		return "", false, err
 	}
