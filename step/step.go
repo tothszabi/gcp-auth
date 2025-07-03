@@ -11,7 +11,7 @@ import (
 
 type Input struct {
 	ServiceAccountKey         string `env:"service_account_key,required"`
-	DockerLogin               bool   `env:"docker_login,required,opt[true,false]"`
+	DockerLogin               bool   `env:"docker_login,opt[true,false]"`
 	ArtifactRegistryLocations string `env:"artifact_registry_locations,required"`
 	Verbose                   bool   `env:"verbose,opt[true,false]"`
 }
