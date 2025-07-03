@@ -21,7 +21,7 @@ const (
 func (s *Step) InstallDependencies() error {
 	version, ok, err := s.installedCLIVersion()
 	if err != nil {
-		return err
+		return s.installCLI()
 	}
 
 	if ok && version == supportedCLIVersion {
