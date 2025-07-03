@@ -37,7 +37,7 @@ func (s *Step) InstallDependencies() error {
 		return s.installCLI()
 	}
 
-	s.logger.Infof("Updateing CLI version to: %s\n", supportedCLIVersion)
+	s.logger.Infof("Updating CLI version to: %s\n", supportedCLIVersion)
 	return s.updateCLI()
 }
 
@@ -97,9 +97,6 @@ func (s *Step) installCLI() error {
 }
 
 func (s *Step) updateCLI() error {
-	s.logger.Println()
-	s.logger.Infof("Updating gcloud CLI to version %s\n", supportedCLIVersion)
-
 	cmd := s.commandFactory.Create("gcloud", []string{"components", "update", fmt.Sprintf("--version=%s", supportedCLIVersion)}, nil)
 	return cmd.Run()
 }
