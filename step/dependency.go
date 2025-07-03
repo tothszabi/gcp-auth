@@ -150,6 +150,9 @@ func downloadSDK(url string) (string, error) {
 
 func (s *Step) extractSDK(tarPath string) (string, error) {
 	extractedPath := path.Join(path.Dir(tarPath), "gougle-cloud-sdk")
+	if err := os.MkdirAll(extractedPath, os.ModePerm); err != nil {
+		return "", err
+	}
 
 	cmd := s.commandFactory.Create("tar", []string{"-xf", tarPath, "-C", extractedPath}, nil)
 	if output, err := cmd.RunAndReturnTrimmedCombinedOutput(); err != nil {
