@@ -39,7 +39,7 @@ func (s *Step) installedCLIVersion() (string, bool, error) {
 	s.logger.Println()
 	s.logger.Infof("Getting CLI version:")
 
-	cmd := s.commandFactory.Create("xcodebuild", []string{}, nil)
+	cmd := s.commandFactory.Create("gcloud", []string{"version", "--format", "json", "----quiet"}, nil)
 	output, err := cmd.RunAndReturnTrimmedCombinedOutput()
 	if err != nil {
 		return "", false, err
