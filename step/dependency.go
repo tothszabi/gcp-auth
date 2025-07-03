@@ -152,7 +152,8 @@ func (s *Step) extractSDK(tarPath string) (string, error) {
 	extractedPath := path.Join(path.Dir(tarPath), "gougle-cloud-sdk")
 
 	cmd := s.commandFactory.Create("tar", []string{"-xf", tarPath, "-C", extractedPath}, nil)
-	if err := cmd.Run(); err != nil {
+	if output, err := cmd.RunAndReturnTrimmedCombinedOutput(); err != nil {
+		s.logger.Errorf("tar failure: %s", output)
 		return "", err
 	}
 
